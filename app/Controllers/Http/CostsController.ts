@@ -5,7 +5,7 @@ import Cost from "App/Models/Cost"
 
 export default class CostsController {
 
-    public async index(ctx: HttpContext) {
+    public async index() {
         const cost = await Cost.all()
 
         console.log(cost);
@@ -17,16 +17,18 @@ export default class CostsController {
 
         const newCostSchema = schema.create({
 
-            Date: schema.string({ trim: true }),
-            Costofdoctor: schema.string({ trim: true }),
-            Costofmedicine: schema.string({ trim: true }),
-            Costofpsychologist: schema.string({ trim: true }),
-            Costofpractitioner: schema.string({ trim: true }),
-            Costofoccupationaltherapist: schema.string({ trim: true }),
-            Costofteacher: schema.string({ trim: true }),
-            Banktransfer: schema.string({ trim: true }),
-            Cash: schema.string({ trim: true }),
-            Total: schema.string({ trim: true }),
+            date: schema.string({ trim: true }),
+            cost_of_doctor: schema.number(),
+            cost_of_medicine: schema.number(),
+            cost_of_psychologist: schema.number(),
+            cost_of_practitioner: schema.number(),
+            cost_of_occupational_therapist: schema.number(),
+            cost_of_teacher: schema.number(),
+            bank_transfer: schema.number(),
+            cash: schema.number(),
+            total: schema.number(),
+            user_id: schema.number(),
+            patient_id: schema.number(),
 
         })
         const payload = await request.validate({ schema: newCostSchema })
@@ -40,7 +42,7 @@ export default class CostsController {
     public async show({ params }:HttpContext) {
         const cost = await Cost.findOrFail(params.id)
 
-        return cost
+        return cost.$extras
 
     }
 
@@ -50,16 +52,16 @@ export default class CostsController {
         const cost = await Cost.findOrFail(params.id)
         
 
-        cost.Date = body.Date
-        cost.Costofdoctor = body.costofdoctor
-        cost.Costofmedicine = body.costofmedicine
-        cost.Costofpsychologist = body.costofpsychologist
-        cost.Costofpractitioner = body.costofpractitioner
-        cost.Costofoccupationaltherapist = body.costofoccupationaltherapist
-        cost.Costofteacher = body.costofteacher
-        cost.Banktransfer = body.Banktransfer
-        cost.Cash = body.Cash
-        cost.Total = body.Total
+        cost.date = body.date
+        cost.cost_of_doctor = body.cost_of_doctor
+        cost.cost_of_medicine = body.cost_of_medicine
+        cost.cost_of_psychologist = body.cost_of_psychologist
+        cost.cost_of_practitioner = body.cost_of_practitioner
+        cost.cost_of_occupational_therapist = body.cost_of_occupational_therapist
+        cost.cost_of_teacher = body.cost_of_teacher
+        cost.bank_transfer = body.bank_transfer
+        cost.cash = body.cash
+        cost.total = body.total
 
 
 

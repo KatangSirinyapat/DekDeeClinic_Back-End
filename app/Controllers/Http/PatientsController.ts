@@ -6,7 +6,7 @@ import Patient from "App/Models/Patient"
 
 export default class PatientsController {
 
-    public async index(ctx: HttpContext) {
+    public async index() {
         const patient = await Patient.all()
 
         console.log(patient);
@@ -19,24 +19,24 @@ export default class PatientsController {
 
         const newPatientSchema = schema.create({
 
-            Clinicnumber: schema.string({ trim: true }),
-            Fname: schema.string({ trim: true }),
-            Lname: schema.string({ trim: true }),
-            Gender: schema.string({ trim: true }),
-            Bod: schema.string({ trim: true }),
-            Age: schema.string({ trim: true }),
-            Telephone: schema.string({ trim: true }),
-            Drugallergy: schema.string({ trim: true }),
-            Congenitaldisease: schema.string({ trim: true }),
-            Homeno: schema.string({ trim: true }),
-            Moo: schema.string({ trim: true }),
-            Soi: schema.string({ trim: true }),
-            Subdistrict: schema.string({ trim: true }),
-            District: schema.string({ trim: true }),
-            Province: schema.string({ trim: true }),
-            Fnameparent: schema.string({ trim: true }),
-            Lnameparent: schema.string({ trim: true }),
-            Relation: schema.string({ trim: true }),
+            clinic_number: schema.string({ trim: true }),
+            fname: schema.string({ trim: true }),
+            lname: schema.string({ trim: true }),
+            gender: schema.string({ trim: true }),
+            bod: schema.string({ trim: true }),
+            age: schema.string({ trim: true }),
+            telephone: schema.string({ trim: true }),
+            drug_allergy: schema.string({ trim: true }),
+            congenital_disease: schema.string({ trim: true }),
+            home_no: schema.string({ trim: true }),
+            moo: schema.string({ trim: true }),
+            soi: schema.string({ trim: true }),
+            subdistrict: schema.string({ trim: true }),
+            district: schema.string({ trim: true }),
+            province: schema.string({ trim: true }),
+            fname_parent: schema.string({ trim: true }),
+            lname_parent: schema.string({ trim: true }),
+            relation: schema.string({ trim: true }),
             // NumOfTreatments: schema.string({ trim: true }),
 
         })
@@ -60,26 +60,28 @@ export default class PatientsController {
         const body = request.body()
         const patient = await Patient.findOrFail(params.id)
         
-        patient.Clinicnumber = body.Clinicnumber
-        patient.Fname = body.Fname
-        patient.Lname = body.Lname
-        patient.Gender = body.Gender
-        patient.Bod = body.Bod
-        patient.Age = body.Age
-        patient.Telephone = body.Telephone
-        patient.Drugallergy = body.Drugallergy
-        patient.Congenitaldisease = body.Congenitaldisease
-        patient.Homeno = body.Homeno
-        patient.Moo = body.Moo
-        patient.Soi = body.Soi
-        patient.Subdistrict = body.Subdistrict
-        patient.District = body.District
-        patient.Province = body.Province
-        patient.Fnameparent = body.Fnamepatent
-        patient.Lnameparent = body.Lnameparent
-        patient.Relation = body.Relation
+        patient.clinic_number = body.clinic_number
+        patient.fname = body.fname
+        patient.lname = body.lname
+        patient.gender = body.gender
+        patient.bod = body.bod
+        patient.age = body.age
+        patient.telephone = body.telephone
+        patient.drug_allergy = body.drug_allergy
+        patient.congenital_disease = body.congenital_disease
+        patient.home_no = body.home_no
+        patient.moo = body.moo
+        patient.soi = body.soi
+        patient.subdistrict = body.subdistrict
+        patient.district = body.district
+        patient.province = body.province
+        patient.fname_parent = body.fname_patent
+        patient.lname_parent = body.lname_parent
+        patient.relation = body.relation
 
-        return patient.save()
+        await patient.save()
+
+        return patient
 
 
     }

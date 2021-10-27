@@ -5,22 +5,21 @@ export default class Costs extends BaseSchema {
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
-      
-      table.string('Date')
-      table.string('Costofdoctor')
-      table.string('Costofmedicine')
-      table.string('Costofpsychologist')
-      table.string('Costofpractitioner')
-      table.string('Costofoccupationaltherapist')
-      table.string('Costofteacher')
-      table.string('Banktransfer')
-      table.string('Cash')
-      table.string('Total')
+      table.increments('id').primary()
+      table.dateTime('date')
+      table.integer('cost_of_doctor')
+      table.integer('cost_of_medicine')
+      table.integer('cost_of_psychologist')
+      table.integer('cost_of_practitioner')
+      table.integer('cost_of_occupational_therapist')
+      table.integer('cost_of_teacher')
+      table.integer('bank_transfer')
+      table.integer('cash')
+      table.integer('total')
+      table.integer('user_id').unsigned().notNullable().references('id').inTable('users')
+      table.integer('patient_id').unsigned().notNullable().references('id').inTable('patients')
 
-      /**
-       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
-       */
+   
       // table.timestamp('created_at', { useTz: true })
       // table.timestamp('updated_at', { useTz: true })
 

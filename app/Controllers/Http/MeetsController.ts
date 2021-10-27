@@ -2,16 +2,21 @@
 import { HttpContext } from "@adonisjs/http-server/build/standalone"
 import { schema } from '@ioc:Adonis/Core/Validator'
 import Meet from "App/Models/Meet"
+// import Patient from "App/Models/Patient"
+// import User from 'App/Models/User'
 
 
 export default class MeetsController {
 
-    public async index(ctx: HttpContext) {
+    public async index() {
         const meet = await Meet.all()
 
-        console.log(meet);
+        // console.log(meet);
         
+        // console.log(Meet.$getRelation('user').relatedModel());
 
+        
+      
         return meet
     }
 
@@ -19,11 +24,13 @@ export default class MeetsController {
 
         const newMeetSchema = schema.create({
 
-            Details: schema.string({ trim: true }),
-            Topic: schema.string({ trim: true }),
-            Datemeet: schema.string({ trim: true }),
-            Time: schema.string({ trim: true }),
-            Timeto: schema.string({ trim: true }),
+            details: schema.string({ trim: true }),
+            topic: schema.string({ trim: true }),
+            date_meet: schema.string(),
+            time: schema.string(),
+            time_to: schema.string(),
+            user_id: schema.number(),
+            patient_id: schema.number(),
 
         })
         const payload = await request.validate({ schema: newMeetSchema })
@@ -31,13 +38,20 @@ export default class MeetsController {
 
         response.status(201)
 
+        
+        
         return meet
     }
 
     public async show({ params }:HttpContext) {
         const meet = await Meet.findOrFail(params.id)
 
-        return meet
+        
+        // console.log(meet.merge.name);
+        
+
+
+        return meet.$extras
 
     }
 
@@ -46,11 +60,11 @@ export default class MeetsController {
         const body = request.body()
         const meet = await Meet.findOrFail(params.id)
         
-        meet.Details = body.Details
-        meet.Topic = body.Topic
-        meet.Datemeet = body.Datemeet
-        meet.Time = body.Time
-        meet.Timeto = body.Timeto
+        meet.details = body.details
+        meet.topic = body.topic
+        meet.date_meet = body.date_meet
+        meet.time = body.time
+        meet.time_to = body.time_to
 
         return meet.save()
 

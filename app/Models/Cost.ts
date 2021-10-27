@@ -1,39 +1,59 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column,  } from '@ioc:Adonis/Lucid/Orm'
+import User from 'App/Models/User'
+import Patient from 'App/Models/Patient'
 
 export default class Cost extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
   @column()
-  public Date: string
+  public user_id: number
 
   @column()
-  public Costofdoctor: string
+  public patient_id: number
 
   @column()
-  public Costofmedicine: string
+  public date: string
 
   @column()
-  public Costofpsychologist: string
+  public cost_of_doctor: number
 
   @column()
-  public Costofpractitioner: string
+  public cost_of_medicine: number
 
   @column()
-  public Costofoccupationaltherapist: string
+  public cost_of_psychologist: number
 
   @column()
-  public Costofteacher: string
+  public cost_of_practitioner: number
 
   @column()
-  public Banktransfer: string
+  public cost_of_occupational_therapist: number
 
   @column()
-  public Cash: string
+  public cost_of_teacher: number
 
   @column()
-  public Total: string
+  public bank_transfer: number
+
+  @column()
+  public cash: number
+
+  @column()
+  public total: number
+
+  @belongsTo(() => User,{
+    localKey: 'user_id'
+  })
+  public user: BelongsTo<typeof User>
+
+  @belongsTo(() => Patient,{
+    localKey: 'patient_id'
+  })
+  public patient: BelongsTo<typeof Patient>
+
+  
 
 
 
@@ -48,16 +68,16 @@ export default class Cost extends BaseModel {
   public serializeExtras() {
     return {
       Data: {
-        Date: this.$extras.Date,
-        Costofdoctor: this.$extras.Costofdoctor,
-        Costofmedicine: this.$extras.Costofmedicine,
-        Costofpsychologist: this.$extras.Costofpsychologist,
-        Costofpractitioner: this.$extras.Costofpractitioner,
-        Costofoccupationaltherapist: this.$extras.Costofoccupationaltherapist,
-        Costofteacher: this.$extras.Costofteacher,
-        Banktransfer: this.$extras.Banktransfer,
-        Cash: this.$extras.Cash,
-        Total: this.$extras.Total,
+        date: this.$extras.date,
+        cost_of_doctor: this.$extras.cost_of_doctor,
+        cost_of_medicine: this.$extras.cost_of_medicine,
+        cost_of_psychologist: this.$extras.cost_of_psychologist,
+        cost_of_practitioner: this.$extras.cost_of_practitioner,
+        cost_of_occupational_therapist: this.$extras.cost_of_occupational_therapist,
+        cost_of_teacher: this.$extras.cost_of_teacher,
+        bank_transfer: this.$extras.bank_transfer,
+        cash: this.$extras.cash,
+        total: this.$extras.total,
       },
     }
   }

@@ -1,64 +1,75 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
-
+import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import Meet from 'App/Models/Meet'
+import Cost from 'App/Models/Cost'
 export default class Patient extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
   @column()
-  public Clinicnumber: string
+  public clinic_number: string
 
   @column()
-  public Fname: string
+  public fname: string
 
   @column()
-  public Lname: string
+  public lname: string
 
   @column()
-  public Gender: string
+  public gender: string
 
   @column()
-  public Bod: string
+  public bod: string
 
   @column()
-  public Age: string
+  public age: string
 
   @column()
-  public Telephone: string
+  public telephone: string
 
   @column()
-  public Drugallergy: string
+  public drug_allergy: string
 
   @column()
-  public Congenitaldisease: string
+  public congenital_disease: string
 
   @column()
-  public Homeno: string
+  public home_no: string
 
   @column()
-  public Moo: string
+  public moo: string
 
   @column()
-  public Soi: string
+  public soi: string
 
   @column()
-  public Subdistrict: string
+  public subdistrict: string
 
   @column()
-  public District: string
+  public district: string
 
   @column()
-  public Province: string
+  public province: string
 
   @column()
-  public Fnameparent: string
+  public fname_parent: string
 
   @column()
-  public Lnameparent: string
+  public lname_parent: string
 
   @column()
-  public Relation: string
+  public relation: string
   // public NumOfTreatments: string
+
+  @hasMany(() => Meet,{
+    foreignKey: 'patient_id',
+  })
+  public meets: HasMany<typeof Meet>
+
+  @hasMany(() => Cost,{
+    foreignKey: 'patient_id'
+  })
+  public costs: HasMany<typeof Cost>
 
 
 
@@ -72,24 +83,24 @@ export default class Patient extends BaseModel {
   public serializeExtras() {
     return {
       Data: {
-        Clinicnumber: this.$extras.Clinicnumber,
-        Fname: this.$extras.Fname,
-        Lname: this.$extras.Lname,
-        Gender: this.$extras.Gender,
-        Bod: this.$extras.Bod,
-        Age: this.$extras.Age,
-        Telephone: this.$extras.Telephone,
-        Drugallergy: this.$extras.Drugallergy,
-        Congenitaldisease: this.$extras.Congenitaldisease,
-        Homeno:this.$extras.Homeno,
-        Moo: this.$extras.Moo,
-        Soi: this.$extras.Soi,
-        Subdistrict: this.$extras.Subdistrict,
-        District: this.$extras.District,
-        Province: this.$extras.Province,
-        Fnameparent: this.$extras.Fnameparent,
-        Lnameparent: this.$extras.Lnameparent,
-        Relation: this.$extras.Relation
+        clinic_number: this.$extras.clinic_number,
+        fname: this.$extras.fname,
+        lname: this.$extras.lname,
+        gender: this.$extras.gender,
+        bod: this.$extras.bod,
+        age: this.$extras.age,
+        telephone: this.$extras.telephone,
+        drug_allergy: this.$extras.drug_allergy,
+        congenital_disease: this.$extras.congenital_disease,
+        home_no:this.$extras.home_no,
+        moo: this.$extras.moo,
+        soi: this.$extras.soi,
+        subdistrict: this.$extras.subdistrict,
+        district: this.$extras.district,
+        province: this.$extras.province,
+        fname_parent: this.$extras.fname_parent,
+        lname_parent: this.$extras.lname_parent,
+        relation: this.$extras.relation
 
       },
     }

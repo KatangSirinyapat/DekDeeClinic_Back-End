@@ -1,41 +1,58 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import Meet from 'App/Models/Meet'
+import Cost from 'App/Models/Cost'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
   public id: number
-  // @column()
-  // public DoctorId: string
 
   @column()
-  public Fname: string
+  public doctor_id: string
 
   @column()
-  public Lname: string
+  public fname: string
 
   @column()
-  public Email: string
+  public lname: string
 
   @column()
-  public Telephone: string
+  public email: string
 
   @column()
-  public Position: string
+  public telephone: string
+
+  @column()
+  public position: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+
+  @hasMany(() => Meet,{
+    foreignKey: 'user_id',
+  })
+  public meets: HasMany<typeof Meet>
+
+  @hasMany(() => Cost,{
+    foreignKey: 'user_id',
+  })
+  public costs: HasMany<typeof Cost>
+
   // public serializeExtras = true
   public serializeExtras() {
     return {
       Data: {
-        Fname: this.$extras.Fname,
-        Lname: this.$extras.Lname,
-        Email: this.$extras.Email,
-        Telephone: this.$extras.Telephone,
-        Position: this.$extras.Position
+        id: this.$extras.id,
+        doctor_id: this.$extras.doctor_id,
+        fname: this.$extras.fname,
+        lname: this.$extras.lname,
+        email: this.$extras.email,
+        telephone: this.$extras.telephone,
+        position: this.$extras.position
 
       },
     }

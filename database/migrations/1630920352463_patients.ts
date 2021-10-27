@@ -5,33 +5,31 @@ export default class Patients extends BaseSchema {
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
-      table.string('Clinicnumber' , 10).notNullable()
-      table.string('Fname', 40).notNullable()
-      table.string('Lname', 40).notNullable()
-      table.string('Gender', 10)
-      table.string('Bod', 20)
-      table.string('Age', 10)
-      table.string('Telephone', 10)
-      table.string('Drugallergy', 30)
-      table.string('Congenitaldisease', 80)
-      table.string('Homeno', 10)
-      table.string('Moo', 10)
-      table.string('Soi', 20)
-      table.string('Subdistrict', 20)
-      table.string('District', 20)
-      table.string('Province', 20)
-      table.string('Fnameparent', 80)
-      table.string('Lnameparent', 80)
-      table.string('Relation', 40)
+      table.increments('id').primary()
+      table.string('clinic_number' , 10).notNullable()
+      table.string('fname', 40).notNullable()
+      table.string('lname', 40).notNullable()
+      table.string('gender', 10)
+      table.string('bod')
+      table.string('age')
+      table.string('telephone', 10)
+      table.string('drug_allergy', 30)
+      table.string('congenital_disease', 80)
+      table.string('home_no', 10)
+      table.string('moo', 10)
+      table.string('soi', 20)
+      table.string('subdistrict', 20)
+      table.string('district', 20)
+      table.string('province', 20)
+      table.string('fname_parent', 80)
+      table.string('lname_parent', 80)
+      table.string('relation', 40)
       // table.string('NumOfTreatments')
 
      
 
 
-      /**
-       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
-       */
+  
       // table.timestamp('created_at', { useTz: true })
       // table.timestamp('updated_at', { useTz: true })
       table.timestamps(true, true)

@@ -4,11 +4,12 @@ import Meet from 'App/Models/Meet'
 import Cost from 'App/Models/Cost'
 
 export default class User extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
 
-  @column()
-  public doctor_id: string
+  // @column({ isPrimary: false })
+  // public id: number
+
+  @column({ isPrimary: true })
+  public doctor_id: number
 
   @column()
   public fname: string
@@ -32,12 +33,12 @@ export default class User extends BaseModel {
   public updatedAt: DateTime
 
 
-  @hasMany(() => Meet,{
+  @hasMany(() => Meet, {
     foreignKey: 'user_id',
   })
   public meets: HasMany<typeof Meet>
 
-  @hasMany(() => Cost,{
+  @hasMany(() => Cost, {
     foreignKey: 'user_id',
   })
   public costs: HasMany<typeof Cost>

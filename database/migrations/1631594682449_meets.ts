@@ -11,8 +11,8 @@ export default class Meets extends BaseSchema {
       table.dateTime('date_meet').notNullable()
       table.time('time').notNullable()
       table.time('time_to').notNullable()
-      table.integer('user_id').unsigned().notNullable().references('id').inTable('users')
-      table.integer('patient_id').unsigned().notNullable().references('id').inTable('patients')
+      table.integer('user_id').notNullable().references('doctor_id').inTable('users')
+      table.integer('patient_id').notNullable().references('clinic_number').inTable('patients')
 
       // table.timestamp('created_at', { useTz: true })
       // table.timestamp('updated_at', { useTz: true })

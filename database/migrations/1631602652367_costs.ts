@@ -16,8 +16,8 @@ export default class Costs extends BaseSchema {
       table.integer('bank_transfer')
       table.integer('cash')
       table.integer('total')
-      table.integer('user_id').unsigned().notNullable().references('id').inTable('users')
-      table.integer('patient_id').unsigned().notNullable().references('id').inTable('patients')
+      table.integer('user_id').notNullable().references('doctor_id').inTable('users')
+      table.integer('patient_id').notNullable().references('clinic_number').inTable('patients')
 
    
       // table.timestamp('created_at', { useTz: true })

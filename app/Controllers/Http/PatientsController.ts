@@ -2,7 +2,7 @@
 import { HttpContext } from "@adonisjs/http-server/build/standalone"
 import { schema } from '@ioc:Adonis/Core/Validator'
 import Patient from "App/Models/Patient"
-
+import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class PatientsController {
 
@@ -19,7 +19,7 @@ export default class PatientsController {
 
         const newPatientSchema = schema.create({
 
-            clinic_number: schema.string({ trim: true }),
+            clinic_number: schema.number(),
             fname: schema.string({ trim: true }),
             lname: schema.string({ trim: true }),
             gender: schema.string({ trim: true }),
@@ -49,10 +49,17 @@ export default class PatientsController {
     }
 
     public async show({ params }:HttpContext) {
-        const patient = await Patient.findOrFail(params.id)
+        // const patient = await Patient.findOrFail(params.id)
+        // return patient
+
+        const patient = Database
+                        .from('patients')
+                        .select('*')
+                        .join('costs','patients.id','=','costs.patient_id')
+                        .join('meets','patients.id','=','meets.patient_id')
+                        .where('patients.clinic_number', params.clinic_number)
 
         return patient
-
     }
 
     public async update({ params, request }:HttpContext) {

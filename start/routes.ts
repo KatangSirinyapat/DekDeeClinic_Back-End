@@ -25,7 +25,13 @@ Route.get('/', async () => {
 })
 
 // Route.get('/user', 'UsersController.index')
-Route.resource('users', 'UsersController').apiOnly()
+
+Route.get('users/:doctor_id', 'UsersController.show')
+Route.resource('users', 'UsersController')
+
+Route.get('patients/:clinic_number','PatientsController.show')
 Route.resource('patients', 'PatientsController').apiOnly()
+
 Route.resource('meets', 'MeetsController').apiOnly()
+
 Route.resource('costs', 'CostsController').apiOnly()

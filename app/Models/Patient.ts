@@ -3,11 +3,11 @@ import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Meet from 'App/Models/Meet'
 import Cost from 'App/Models/Cost'
 export default class Patient extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
+  // @column({ isPrimary: false })
+  // public id: number
 
-  @column()
-  public clinic_number: string
+  @column({ isPrimary: true })
+  public clinic_number: number
 
   @column()
   public fname: string

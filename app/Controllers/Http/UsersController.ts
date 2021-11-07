@@ -3,6 +3,9 @@
 import { HttpContext, Request } from "@adonisjs/http-server/build/standalone"
 import { schema } from '@ioc:Adonis/Core/Validator'
 import User from 'App/Models/User'
+import Database from '@ioc:Adonis/Lucid/Database'
+
+
 
 export default class UsersController {
     
@@ -11,14 +14,27 @@ export default class UsersController {
         // console.log(ctx);
         const user = await User.all()
         // console.log(User.$getRelation('meets').type);
-        
+
+        // const user = Database
+        //             .from('users')
+        //             .select('*')
+        //             .from('users')
+        //             // .join('meets','users.id','=','meets.user_id')
+        //             // .join('costs','users.id','=','costs.user_id')
+        //             .where('users.id','>=','0')
+
+       
+                    
         return  user
     }
 
     public async store({ request, response }:HttpContext){
 
+    
+
         const newUserSchema = schema.create({
-            doctor_id: schema.string({ trim: true}),
+          
+            doctor_id: schema.number(),
             fname: schema.string({ trim: true}),
             lname: schema.string({ trim: true}),
             email: schema.string({ trim: true}),
@@ -40,9 +56,20 @@ export default class UsersController {
     }
 
     public async show({ params }: HttpContext){
-        const user = await User.findOrFail(params.id)
+        // const user = await User.findOrFail(params.id)
+        // const user_meets = user.related('meets').query()
+        // const user_costs = user.related('costs').query()
+        // console.log(user_meets);
 
-        
+        // return user_meets
+
+        const user = Database
+                    .from('users')
+                    .select('*')
+                    .from('users')
+                    .join('meets','users.doctor_id','=','meets.user_id')
+                    .join('costs','users.doctor_id','=','costs.user_id')
+                    .where('users.doctor_id',params.doctor_id)
 
         return user
 

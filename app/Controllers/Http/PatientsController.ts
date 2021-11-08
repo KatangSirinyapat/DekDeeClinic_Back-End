@@ -65,7 +65,7 @@ export default class PatientsController {
     public async update({ params, request }:HttpContext) {
 
         const body = request.body()
-        const patient = await Patient.findOrFail(params.id)
+        const patient = await Patient.findOrFail(params.clinic_number)
         
         patient.clinic_number = body.clinic_number
         patient.fname = body.fname
@@ -95,7 +95,7 @@ export default class PatientsController {
 
     public async destroy({ params }:HttpContext) {
 
-        const patient = await Patient.findOrFail(params.id)
+        const patient = await Patient.findOrFail(params.clinic_number)
 
         return patient.delete()
 

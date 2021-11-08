@@ -1,6 +1,6 @@
 // import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-import { HttpContext, Request } from "@adonisjs/http-server/build/standalone"
+import { HttpContext } from "@adonisjs/http-server/build/standalone"
 import { schema } from '@ioc:Adonis/Core/Validator'
 import User from 'App/Models/User'
 import Database from '@ioc:Adonis/Lucid/Database'
@@ -80,7 +80,7 @@ export default class UsersController {
         
 
         const body = request.body()
-        let user = await User.findOrFail(params.id)
+        let user = await User.findOrFail(params.doctor_id)
         user.doctor_id = body.doctor_id
         user.fname = body.fname
         user.lname = body.lname
@@ -95,7 +95,7 @@ export default class UsersController {
     }
 
     public async destroy({ params }){
-        const user = await User.findOrFail(params.id)
+        const user = await User.findOrFail(params.doctor_id)
         
         
         return user.delete()

@@ -81,7 +81,7 @@ export default class UsersController {
 
         const body = request.body()
         let user = await User.findOrFail(params.doctor_id)
-        user.doctor_id = body.doctor_id
+        // user.doctor_id = body.doctor_id
         user.fname = body.fname
         user.lname = body.lname
         user.email = body.email

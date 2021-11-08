@@ -66,8 +66,8 @@ export default class PatientsController {
 
         const body = request.body()
         const patient = await Patient.findOrFail(params.clinic_number)
-        
-        patient.clinic_number = body.clinic_number
+
+        // patient.clinic_number = body.clinic_number
         patient.fname = body.fname
         patient.lname = body.lname
         patient.gender = body.gender
@@ -86,7 +86,7 @@ export default class PatientsController {
         patient.lname_parent = body.lname_parent
         patient.relation = body.relation
 
-        await patient.save()
+         patient.save()
 
         return patient
 

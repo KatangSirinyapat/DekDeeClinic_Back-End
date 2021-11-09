@@ -3,7 +3,6 @@
 import { HttpContext } from "@adonisjs/http-server/build/standalone"
 import { schema } from '@ioc:Adonis/Core/Validator'
 import User from 'App/Models/User'
-import Database from '@ioc:Adonis/Lucid/Database'
 
 
 
@@ -12,7 +11,7 @@ export default class UsersController {
     public async index(){
         
         // console.log(ctx);
-        const user = await User.all()
+        // const user = await User.all()
         // console.log(User.$getRelation('meets').type);
 
         // const user = Database
@@ -23,9 +22,15 @@ export default class UsersController {
         //             // .join('costs','users.id','=','costs.user_id')
         //             .where('users.id','>=','0')
 
-       
+        // return response.status(200).json({
+        //     message: 'Successfully retrieved users.',
+        //     data: user
+        // })
+
+
+        const users = User.query().preload('meets').preload('costs')
                     
-        return  user
+        return  users
     }
 
     public async store({ request, response }:HttpContext){
@@ -56,20 +61,26 @@ export default class UsersController {
     }
 
     public async show({ params }: HttpContext){
-        // const user = await User.findOrFail(params.id)
+
+
+        // const user = await User.findOrFail(params.doctor_id)
+        // User.$getRelation('meets').setRelatedForMany(User,Meet)
         // const user_meets = user.related('meets').query()
         // const user_costs = user.related('costs').query()
         // console.log(user_meets);
-
         // return user_meets
+        
+        // const user = Database
+        //             .from('users')
+        //             .select('*')
+        //             .from('users')
+        //             .join('meets','users.doctor_id','=','meets.user_id')
+        //             .join('costs','users.doctor_id','=','costs.user_id')
+        //             .where('users.doctor_id',params.doctor_id)
 
-        const user = Database
-                    .from('users')
-                    .select('*')
-                    .from('users')
-                    .join('meets','users.doctor_id','=','meets.user_id')
-                    .join('costs','users.doctor_id','=','costs.user_id')
-                    .where('users.doctor_id',params.doctor_id)
+        // return user
+
+        const user = await User.query().where('doctor_id',params.doctor_id).preload('meets').preload('costs')
 
         return user
 

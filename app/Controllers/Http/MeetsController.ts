@@ -51,7 +51,7 @@ export default class MeetsController {
         
 
 
-        return meet.$extras
+        return meet
 
     }
 

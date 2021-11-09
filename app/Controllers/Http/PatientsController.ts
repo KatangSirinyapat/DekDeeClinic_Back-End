@@ -2,17 +2,19 @@
 import { HttpContext } from "@adonisjs/http-server/build/standalone"
 import { schema } from '@ioc:Adonis/Core/Validator'
 import Patient from "App/Models/Patient"
-import Database from '@ioc:Adonis/Lucid/Database'
+
 
 export default class PatientsController {
 
     public async index() {
-        const patient = await Patient.all()
+        // const patient = await Patient.all()
 
-        console.log(patient);
-        
+        // console.log(patient);
 
-        return patient
+        const patients = await Patient.query().preload('meets').preload('costs')
+
+
+        return patients
     }
 
     public async store({ request, response }: HttpContext) {
@@ -48,21 +50,25 @@ export default class PatientsController {
         return patient
     }
 
-    public async show({ params }:HttpContext) {
+    public async show({ params }: HttpContext) {
         // const patient = await Patient.findOrFail(params.id)
         // return patient
 
-        const patient = Database
-                        .from('patients')
-                        .select('*')
-                        .join('costs','patients.id','=','costs.patient_id')
-                        .join('meets','patients.id','=','meets.patient_id')
-                        .where('patients.clinic_number', params.clinic_number)
+        // const patient = Database
+        //                 .from('patients')
+        //                 .select('*')
+        //                 .join('costs','patients.clinic_number','=','costs.patient_id')
+        //                 .join('meets','patients.clinic_number','=','meets.patient_id')
+        //                 .where('patients.clinic_number', params.clinic_number)
+
+        const patient = await Patient.query().where('clinic_number',params.clinic_number).preload('costs').preload('meets')
+
+    
 
         return patient
     }
 
-    public async update({ params, request }:HttpContext) {
+    public async update({ params, request }: HttpContext) {
 
         const body = request.body()
         const patient = await Patient.findOrFail(params.clinic_number)
@@ -86,14 +92,14 @@ export default class PatientsController {
         patient.lname_parent = body.lname_parent
         patient.relation = body.relation
 
-         patient.save()
+        patient.save()
 
         return patient
 
 
     }
 
-    public async destroy({ params }:HttpContext) {
+    public async destroy({ params }: HttpContext) {
 
         const patient = await Patient.findOrFail(params.clinic_number)
 

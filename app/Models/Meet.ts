@@ -48,18 +48,18 @@ export default class Meet extends BaseModel {
 
 
 
-  public serializeExtras() {
-    return {
-      Data: {
+  // public serializeExtras() {
+  //   return {
+  //     Data: {
         
-        id: this.$extras.id,
-        details: this.$extras.details,
-        topic: this.$extras.topic,
-        date_meet: this.$extras.date_meet,
-        time: this.$extras.time,
-        time_to: this.$extras.time_to,
-        user_id: this.$extras.user_id
-      },
-    }
-  }
+  //       id: this.$extras.id,
+  //       details: this.$extras.details,
+  //       topic: this.$extras.topic,
+  //       date_meet: this.$extras.date_meet,
+  //       time: this.$extras.time,
+  //       time_to: this.$extras.time_to,
+  //       user_id: this.$extras.user_id
+  //     },
+  //   }
+  // }
 }

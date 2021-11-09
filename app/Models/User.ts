@@ -44,18 +44,18 @@ export default class User extends BaseModel {
   public costs: HasMany<typeof Cost>
 
   // public serializeExtras = true
-  public serializeExtras() {
-    return {
-      Data: {
-        id: this.$extras.id,
-        doctor_id: this.$extras.doctor_id,
-        fname: this.$extras.fname,
-        lname: this.$extras.lname,
-        email: this.$extras.email,
-        telephone: this.$extras.telephone,
-        position: this.$extras.position
+  // public serializeExtras() {
+  //   return {
+  //     Data: {
+  //       id: this.$extras.id,
+  //       doctor_id: this.$extras.doctor_id,
+  //       fname: this.$extras.fname,
+  //       lname: this.$extras.lname,
+  //       email: this.$extras.email,
+  //       telephone: this.$extras.telephone,
+  //       position: this.$extras.position
 
-      },
-    }
-  }
+  //     },
+  //   }
+  // }
 }

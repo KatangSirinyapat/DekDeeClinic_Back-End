@@ -80,29 +80,29 @@ export default class Patient extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  public serializeExtras() {
-    return {
-      Data: {
-        clinic_number: this.$extras.clinic_number,
-        fname: this.$extras.fname,
-        lname: this.$extras.lname,
-        gender: this.$extras.gender,
-        bod: this.$extras.bod,
-        age: this.$extras.age,
-        telephone: this.$extras.telephone,
-        drug_allergy: this.$extras.drug_allergy,
-        congenital_disease: this.$extras.congenital_disease,
-        home_no:this.$extras.home_no,
-        moo: this.$extras.moo,
-        soi: this.$extras.soi,
-        subdistrict: this.$extras.subdistrict,
-        district: this.$extras.district,
-        province: this.$extras.province,
-        fname_parent: this.$extras.fname_parent,
-        lname_parent: this.$extras.lname_parent,
-        relation: this.$extras.relation
+  // public serializeExtras() {
+  //   return {
+  //     Data: {
+  //       clinic_number: this.$extras.clinic_number,
+  //       fname: this.$extras.fname,
+  //       lname: this.$extras.lname,
+  //       gender: this.$extras.gender,
+  //       bod: this.$extras.bod,
+  //       age: this.$extras.age,
+  //       telephone: this.$extras.telephone,
+  //       drug_allergy: this.$extras.drug_allergy,
+  //       congenital_disease: this.$extras.congenital_disease,
+  //       home_no:this.$extras.home_no,
+  //       moo: this.$extras.moo,
+  //       soi: this.$extras.soi,
+  //       subdistrict: this.$extras.subdistrict,
+  //       district: this.$extras.district,
+  //       province: this.$extras.province,
+  //       fname_parent: this.$extras.fname_parent,
+  //       lname_parent: this.$extras.lname_parent,
+  //       relation: this.$extras.relation
 
-      },
-    }
-  }
+  //     },
+  //   }
+  // }
 }

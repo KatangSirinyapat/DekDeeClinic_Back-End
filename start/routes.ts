@@ -27,6 +27,7 @@ Route.get('/', async () => {
 // Route.get('/user', 'UsersController.index')
 
 Route.get('users/', 'UsersController.index')
+Route.post('users/', 'UsersController.store')
 Route.get('users/:doctor_id', 'UsersController.show')
 Route.put('users/:doctor_id', 'UsersController.update')
 Route.delete('users/:doctor_id', 'UsersController.destroy')
@@ -34,6 +35,7 @@ Route.delete('users/:doctor_id', 'UsersController.destroy')
 // Route.resource('users', 'UsersController')
 
 Route.get('patients/','PatientsController.index')
+Route.post('patients/','PatientsController.store')
 Route.get('patients/:clinic_number','PatientsController.show')
 Route.put('patients/:clinic_number','PatientsController.update')
 Route.delete('patients/:clinic_number','PatientsController.destroy')

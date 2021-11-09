@@ -6,11 +6,10 @@ import Cost from "App/Models/Cost"
 export default class CostsController {
 
     public async index() {
-        const cost = await Cost.all()
+        const costs = await Cost.all()
 
-        console.log(cost);
     
-        return cost
+        return costs
     }
 
     public async store({ request, response }: HttpContext) {
@@ -40,9 +39,10 @@ export default class CostsController {
     }
 
     public async show({ params }:HttpContext) {
+
         const cost = await Cost.findOrFail(params.id)
 
-        return cost.$extras
+        return cost
 
     }
 

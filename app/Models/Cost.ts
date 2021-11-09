@@ -65,20 +65,20 @@ export default class Cost extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  public serializeExtras() {
-    return {
-      Data: {
-        date: this.$extras.date,
-        cost_of_doctor: this.$extras.cost_of_doctor,
-        cost_of_medicine: this.$extras.cost_of_medicine,
-        cost_of_psychologist: this.$extras.cost_of_psychologist,
-        cost_of_practitioner: this.$extras.cost_of_practitioner,
-        cost_of_occupational_therapist: this.$extras.cost_of_occupational_therapist,
-        cost_of_teacher: this.$extras.cost_of_teacher,
-        bank_transfer: this.$extras.bank_transfer,
-        cash: this.$extras.cash,
-        total: this.$extras.total,
-      },
-    }
-  }
+  // public serializeExtras() {
+  //   return {
+  //     Data: {
+  //       date: this.$extras.date,
+  //       cost_of_doctor: this.$extras.cost_of_doctor,
+  //       cost_of_medicine: this.$extras.cost_of_medicine,
+  //       cost_of_psychologist: this.$extras.cost_of_psychologist,
+  //       cost_of_practitioner: this.$extras.cost_of_practitioner,
+  //       cost_of_occupational_therapist: this.$extras.cost_of_occupational_therapist,
+  //       cost_of_teacher: this.$extras.cost_of_teacher,
+  //       bank_transfer: this.$extras.bank_transfer,
+  //       cash: this.$extras.cash,
+  //       total: this.$extras.total,
+  //     },
+  //   }
+  // }
 }

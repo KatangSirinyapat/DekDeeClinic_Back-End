@@ -44,3 +44,5 @@ Route.delete('patients/:clinic_number','PatientsController.destroy')
 Route.resource('meets', 'MeetsController').apiOnly()
 
 Route.resource('costs', 'CostsController').apiOnly()
+
+Route.resource('details', 'DetailsController').apiOnly()

@@ -11,7 +11,7 @@ export default class PatientsController {
 
         // console.log(patient);
 
-        const patients = await Patient.query().preload('meets').preload('costs')
+        const patients = await Patient.query().preload('meets').preload('costs').preload('details')
 
 
         return patients
@@ -61,7 +61,7 @@ export default class PatientsController {
         //                 .join('meets','patients.clinic_number','=','meets.patient_id')
         //                 .where('patients.clinic_number', params.clinic_number)
 
-        const patient = await Patient.query().where('clinic_number',params.clinic_number).preload('costs').preload('meets')
+        const patient = await Patient.query().where('clinic_number',params.clinic_number).preload('costs').preload('meets').preload('details')
 
     
 

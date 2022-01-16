@@ -2,6 +2,8 @@ import { DateTime } from 'luxon'
 import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Meet from 'App/Models/Meet'
 import Cost from 'App/Models/Cost'
+import Details from './Details'
+
 export default class Patient extends BaseModel {
   // @column({ isPrimary: false })
   // public id: number
@@ -59,7 +61,9 @@ export default class Patient extends BaseModel {
 
   @column()
   public relation: string
-  // public NumOfTreatments: string
+
+  @column()
+  public num_of_treatments: number
 
   @hasMany(() => Meet,{
     foreignKey: 'patient_id',
@@ -70,6 +74,13 @@ export default class Patient extends BaseModel {
     foreignKey: 'patient_id'
   })
   public costs: HasMany<typeof Cost>
+
+  @hasMany(() => Details,{
+    foreignKey: 'patient_id'
+  })
+  public details: HasMany<typeof Details>
+
+
 
 
 

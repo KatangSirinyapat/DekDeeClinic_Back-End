@@ -2,6 +2,7 @@
 import { HttpContext } from "@adonisjs/http-server/build/standalone"
 import { schema } from '@ioc:Adonis/Core/Validator'
 import Details from 'App/Models/Details'
+import Patient from "App/Models/Patient"
 
 export default class DetailsController {
 
@@ -24,6 +25,7 @@ export default class DetailsController {
             pr: schema.string({ trim: true }),
             rr: schema.string({ trim: true }),
             symptom: schema.string({ trim: true }),
+         
             patient_id: schema.number()
         })
         const payload = await request.validate({ schema: newDetailsSchema })
@@ -38,7 +40,7 @@ export default class DetailsController {
     public async show({ params }: HttpContext) {
 
         const detail = await Details.findOrFail(params.id)
-
+        // detail.num_of_treatments = detail.num_of_treatments+1
         return detail
     }
 
@@ -54,9 +56,12 @@ export default class DetailsController {
         details.pr = body.pr
         details.rr = body.rr
         details.symptom = body.symptom
+       
 
         return details.save()
     }
+
+
 
     public async destroy({ params }: HttpContext) {
 

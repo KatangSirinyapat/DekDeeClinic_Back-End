@@ -2,6 +2,9 @@
 import { HttpContext } from "@adonisjs/http-server/build/standalone"
 import { schema } from '@ioc:Adonis/Core/Validator'
 import Patient from "App/Models/Patient"
+import User from "App/Models/User"
+import Meet from "App/Models/Meet"
+import Database from "@ioc:Adonis/Lucid/Database"
 
 
 export default class PatientsController {
@@ -19,6 +22,7 @@ export default class PatientsController {
 
     public async store({ request, response }: HttpContext) {
 
+        
         const newPatientSchema = schema.create({
 
             clinic_number: schema.number(),
@@ -39,6 +43,7 @@ export default class PatientsController {
             fname_parent: schema.string({ trim: true }),
             lname_parent: schema.string({ trim: true }),
             relation: schema.string({ trim: true }),
+            num_of_treatments: schema.number(),
             // NumOfTreatments: schema.string({ trim: true }),
 
         })
@@ -61,11 +66,43 @@ export default class PatientsController {
         //                 .join('meets','patients.clinic_number','=','meets.patient_id')
         //                 .where('patients.clinic_number', params.clinic_number)
 
-        const patient = await Patient.query().where('clinic_number',params.clinic_number).preload('costs').preload('meets').preload('details')
+        const patient = await Patient.query().where('clinic_number', params.clinic_number).preload('costs').preload('meets').preload('details')
 
-    
+
 
         return patient
+    }
+
+    public async show_patient_data({ params }) {
+
+        const patient = await Patient.query().select('*').where('clinic_number', params.clinic_number)
+
+        const patient1 = await Patient.findOrFail(params.clinic_number)
+        patient1.num_of_treatments = patient1.num_of_treatments+1
+        // const user = await User.query().preload('meets')
+        // const meet = await Meet.query().where('patient_id', params.clinic_number)
+
+        //  const user1 = Database
+        //             .from('users')
+        //             .select('fname', 'lname', 'doctor_id', 'meets.user_id')
+        //             .join('meets','doctor_id','=','meets.user_id')
+                    // .where('meets.user_id','=','doctor_id')
+       
+
+        // const searchCriteria = {
+        //     fname: 'เด็กดี',
+        //   }
+
+        //   const savePayload = {
+
+        //     fname: 'เด็กดี',
+        //     lname: 'ซื่อตรง'
+        //   }
+
+        //   const patient = await Patient.firstOrNew(searchCriteria,savePayload)
+
+
+        return patient1.save()
     }
 
     public async update({ params, request }: HttpContext) {

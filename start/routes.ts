@@ -35,6 +35,7 @@ Route.delete('users/:doctor_id', 'UsersController.destroy')
 // Route.resource('users', 'UsersController')
 
 Route.get('patients/','PatientsController.index')
+Route.get('patients/data/:clinic_number', 'PatientsController.show_patient_data')
 Route.post('patients/','PatientsController.store')
 Route.get('patients/:clinic_number','PatientsController.show')
 Route.put('patients/:clinic_number','PatientsController.update')
@@ -43,6 +44,14 @@ Route.delete('patients/:clinic_number','PatientsController.destroy')
 
 Route.resource('meets', 'MeetsController').apiOnly()
 
-Route.resource('costs', 'CostsController').apiOnly()
+Route.get('costs/sum_of_year/','CostsController.sum_of_year')
+
+Route.get('costs/','CostsController.index')
+Route.post('costs/','CostsController.store')
+Route.get('costs/:id','CostsController.show')
+Route.put('costs/:id','CostsController.update')
+Route.delete('costs/:id','CostsController.destroy')
+
+// Route.resource('costs', 'CostsController').apiOnly()
 
 Route.resource('details', 'DetailsController').apiOnly()

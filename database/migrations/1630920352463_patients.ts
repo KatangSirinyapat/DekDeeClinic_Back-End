@@ -24,7 +24,7 @@ export default class Patients extends BaseSchema {
       table.string('fname_parent', 80)
       table.string('lname_parent', 80)
       table.string('relation', 40)
-      // table.string('NumOfTreatments')
+      table.integer('num_of_treatments')
 
      
 

@@ -14,7 +14,7 @@ export default class Details extends BaseSchema {
       table.string('pr')
       table.string('rr')
       table.string('symptom')
-
+      
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

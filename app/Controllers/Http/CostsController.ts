@@ -2,13 +2,14 @@
 import { HttpContext } from "@adonisjs/http-server/build/standalone"
 import { schema } from '@ioc:Adonis/Core/Validator'
 import Cost from "App/Models/Cost"
+import Patient from "App/Models/Patient"
 
 export default class CostsController {
 
     public async index() {
         const costs = await Cost.all()
 
-    
+
         return costs
     }
 
@@ -38,7 +39,7 @@ export default class CostsController {
         return cost
     }
 
-    public async show({ params }:HttpContext) {
+    public async show({ params }: HttpContext) {
 
         const cost = await Cost.findOrFail(params.id)
 
@@ -46,11 +47,11 @@ export default class CostsController {
 
     }
 
-    public async update({ params, request }:HttpContext) {
+    public async update({ params, request }: HttpContext) {
 
         const body = request.body()
         const cost = await Cost.findOrFail(params.id)
-        
+
 
         cost.date = body.date
         cost.cost_of_doctor = body.cost_of_doctor
@@ -70,11 +71,45 @@ export default class CostsController {
 
     }
 
-    public async destroy({ params }:HttpContext) {
+    public async destroy({ params }: HttpContext) {
 
         const cost = await Cost.findOrFail(params.id)
 
         return cost.delete()
+
+    }
+
+    public async sum_of_year() {
+
+        const costs = await Cost.all()
+        let tmp = 0;
+
+        costs.map((item, index) => {
+            tmp += item.cost_of_doctor +
+                item.cost_of_medicine +
+                item.cost_of_occupational_therapist +
+                item.cost_of_practitioner +
+                item.cost_of_psychologist +
+                item.cost_of_teacher
+            return tmp
+        })
+
+        const patients = await Patient.all()
+
+        let count_patient =0
+        let service =0
+        patients.map((item,index) => {
+            count_patient++
+            service += item.num_of_treatments
+        })
+
+
+
+        return JSON.stringify({
+            "sum_of_year": tmp,
+            "count_of_patient": count_patient,
+            "service": service
+        })
 
     }
 }

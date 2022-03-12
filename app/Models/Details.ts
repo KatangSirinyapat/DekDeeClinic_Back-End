@@ -31,6 +31,8 @@ export default class Details extends BaseModel {
   @column()
   public symptom: string
 
+ 
+
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

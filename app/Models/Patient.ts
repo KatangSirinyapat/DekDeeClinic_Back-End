@@ -65,6 +65,10 @@ export default class Patient extends BaseModel {
   @column()
   public num_of_treatments: number
 
+  
+
+
+
   @hasMany(() => Meet,{
     foreignKey: 'patient_id',
   })

@@ -2,7 +2,7 @@
 import { HttpContext } from "@adonisjs/http-server/build/standalone"
 import { schema } from '@ioc:Adonis/Core/Validator'
 import Details from 'App/Models/Details'
-import Patient from "App/Models/Patient"
+// import Patient from "App/Models/Patient"
 
 export default class DetailsController {
 

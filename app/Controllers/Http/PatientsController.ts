@@ -2,9 +2,9 @@
 import { HttpContext } from "@adonisjs/http-server/build/standalone"
 import { schema } from '@ioc:Adonis/Core/Validator'
 import Patient from "App/Models/Patient"
-import User from "App/Models/User"
-import Meet from "App/Models/Meet"
-import Database from "@ioc:Adonis/Lucid/Database"
+// import User from "App/Models/User"
+// import Meet from "App/Models/Meet"
+// import Database from "@ioc:Adonis/Lucid/Database"
 
 
 export default class PatientsController {
@@ -22,7 +22,7 @@ export default class PatientsController {
 
     public async store({ request, response }: HttpContext) {
 
-        
+
         const newPatientSchema = schema.create({
 
             clinic_number: schema.number(),
@@ -75,10 +75,10 @@ export default class PatientsController {
 
     public async show_patient_data({ params }) {
 
-        const patient = await Patient.query().select('*').where('clinic_number', params.clinic_number)
+        // const patient = await Patient.query().select('*').where('clinic_number', params.clinic_number)
 
         const patient1 = await Patient.findOrFail(params.clinic_number)
-        patient1.num_of_treatments = patient1.num_of_treatments+1
+        patient1.num_of_treatments = patient1.num_of_treatments + 1
         // const user = await User.query().preload('meets')
         // const meet = await Meet.query().where('patient_id', params.clinic_number)
 
@@ -86,8 +86,8 @@ export default class PatientsController {
         //             .from('users')
         //             .select('fname', 'lname', 'doctor_id', 'meets.user_id')
         //             .join('meets','doctor_id','=','meets.user_id')
-                    // .where('meets.user_id','=','doctor_id')
-       
+        // .where('meets.user_id','=','doctor_id')
+
 
         // const searchCriteria = {
         //     fname: 'เด็กดี',
@@ -101,8 +101,26 @@ export default class PatientsController {
 
         //   const patient = await Patient.firstOrNew(searchCriteria,savePayload)
 
+        const patient = await Patient.query().where('clinic_number', params.clinic_number).preload('costs')
+        let count = 0;
 
-        return patient1.save()
+        patient.map((item, index) => {
+            if (item.costs) {
+
+                item.costs.map(() => {
+                    count++;
+                    console.log("Test");
+                })
+
+            }
+        })
+
+
+        patient1.num_of_treatments = count
+        patient1.save()
+
+
+        return patient1
     }
 
     public async update({ params, request }: HttpContext) {
@@ -141,6 +159,20 @@ export default class PatientsController {
         const patient = await Patient.findOrFail(params.clinic_number)
 
         return patient.delete()
+
+    }
+
+
+    public async count_num_of_treatments({ params }) {
+
+        const patient = await Patient.query().where('clinic_number', params.clinic_number).preload('costs')
+        let count = 0;
+
+        patient.map((item, index) => {
+            count++;
+        })
+
+
 
     }
 }

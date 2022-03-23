@@ -44,7 +44,13 @@ Route.delete('patients/:clinic_number','PatientsController.destroy')
 
 Route.resource('meets', 'MeetsController').apiOnly()
 
+
 Route.get('costs/sum_of_year/','CostsController.sum_of_year')
+Route.get('costs/find_range/:range1/:range2','CostsController.find_range')
+Route.get('costs/range_sun_of_year/:range1/:range2','CostsController.range_sum_of_year')
+
+
+// Route.shallowResource('cost/find_range/:range1&:range2','CostsController.find_range')
 
 Route.get('costs/','CostsController.index')
 Route.post('costs/','CostsController.store')

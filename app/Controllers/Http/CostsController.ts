@@ -87,11 +87,6 @@ export default class CostsController {
     public async find_range({ params }: HttpContext) {
         const costs = await Cost.all()
 
-        let data = [];
-        let i = 0;
-        // console.log(params.range1);
-        // console.log(params.range2);
-
         let cost_of_doctor = 0;
         let cost_of_medicine = 0;
         let cost_of_psychologist = 0;
@@ -102,32 +97,30 @@ export default class CostsController {
         let cash = 0;
         let total = 0;
 
-        // console.log(params.range1);
-
-        let date_range1 = moment(params.range1).utc().format(SLASH_YMD);
-        let date_range2 = moment(params.range2).utc().format(SLASH_YMD);
 
 
+        let params1 = params.range1
+        let params2 = params.range2
 
-        // let str ="";
-
-
+        let date_range1 = moment(params1).utc(true).format(SLASH_YMD);
+        let date_range2 = moment(params2).utc(true).format(SLASH_YMD);
+        console.log(params.range1);
+        console.log(date_range1);
+        
         costs.map((item, index) => {
 
-            console.log(item.$original.date);
+            // console.log(item.$original.date);
 
-            // console.log(moment(item.$original.date).format(SLASH_DMY));
+
             let date_cost = moment(item.$original.date).utc().format(SLASH_YMD);
-            // console.log("Test:" + date_cost);
-            // console.log(date_range1);
-            // console.log(date_range2);
+
 
 
             // YYYY/MM/DD this format
-            let is_between_cost = moment(date_cost).isBetween(date_range1, date_range2,'days','(]') 
+            let is_between_cost = moment(date_cost).isBetween(date_range1, date_range2, 'days', '(]')
 
             // console.log("Test_moment: " + moment('20/10/2022').isBetween('19/10/2022', '25/10/2022'));
-            
+
             console.log(date_cost, date_range1, date_range2, is_between_cost); 
 
 
@@ -204,7 +197,7 @@ export default class CostsController {
             let date_cost = moment(item.date, 'YYYY/MM/DD HH:mm:ss').format(SLASH_YMD)
 
             // YYYY/MM/DD this format
-            let is_between_cost = moment(date_cost).isBetween(date_range1, date_range2,'days','(]') 
+            let is_between_cost = moment(date_cost).isBetween(date_range1, date_range2, 'days', '(]')
 
 
             // console.log("----------------------");
@@ -233,7 +226,7 @@ export default class CostsController {
             // console.log(item);
 
 
-            let is_between_patient = moment(date_patient).isBetween(date_range1, date_range2,'days','(]')
+            let is_between_patient = moment(date_patient).isBetween(date_range1, date_range2, 'days', '(]')
 
             console.log("----------------------");
             // console.log("Date_patients: " + date_patient);

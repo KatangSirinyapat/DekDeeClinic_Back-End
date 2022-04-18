@@ -5,8 +5,8 @@ import Cost from 'App/Models/Cost'
 
 export default class User extends BaseModel {
 
-  // @column({ isPrimary: false })
-  // public id: number
+  @column({ isPrimary: false })
+  public id: number
 
   @column({ isPrimary: true })
   public doctor_id: number

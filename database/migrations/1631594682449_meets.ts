@@ -8,7 +8,7 @@ export default class Meets extends BaseSchema {
       table.increments('id').primary()
       table.string('details',100).notNullable()
       table.string('topic',100).notNullable()
-      table.string('date_meet').notNullable()
+      table.string('date_meet').notNullable().unique()
       table.string('time').notNullable()
       table.string('time_to').notNullable()
       table.integer('user_id').notNullable().references('doctor_id').inTable('users')

@@ -36,6 +36,8 @@ export default class MeetsController {
         const payload = await request.validate({ schema: newMeetSchema })
         const meet = await Meet.create(payload)
 
+        
+
         response.status(201)
 
         

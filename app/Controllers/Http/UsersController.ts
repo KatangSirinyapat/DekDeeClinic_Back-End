@@ -3,7 +3,7 @@
 import { HttpContext } from "@adonisjs/http-server/build/standalone"
 import { schema } from '@ioc:Adonis/Core/Validator'
 import User from 'App/Models/User'
-
+import Database from "@ioc:Adonis/Lucid/Database"
 
 
 export default class UsersController {
@@ -35,7 +35,8 @@ export default class UsersController {
 
     public async store({ request, response }:HttpContext){
 
-    
+        const body = request.body()
+        
 
         const newUserSchema = schema.create({
           
@@ -48,6 +49,11 @@ export default class UsersController {
         })
 
         const payload = await request.validate({ schema: newUserSchema })
+        // payload.doctor_id = body.doctor_id+1
+
+
+        
+
         const user = await User.create(payload)
 
         // const body = request.body();

@@ -5,8 +5,8 @@ import Cost from 'App/Models/Cost'
 import Details from './Details'
 
 export default class Patient extends BaseModel {
-  // @column({ isPrimary: false })
-  // public id: number
+  @column({ isPrimary: false })
+  public id: number
 
   @column({ isPrimary: true })
   public clinic_number: number

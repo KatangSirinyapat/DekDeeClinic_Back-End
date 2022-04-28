@@ -49,6 +49,7 @@ export default class UsersController {
         })
 
         const payload = await request.validate({ schema: newUserSchema })
+
         // payload.doctor_id = body.doctor_id+1
 
 

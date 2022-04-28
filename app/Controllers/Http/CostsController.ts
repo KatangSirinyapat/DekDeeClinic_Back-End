@@ -102,10 +102,17 @@ export default class CostsController {
         let params1 = params.range1
         let params2 = params.range2
 
-        let date_range1 = moment(params1).utc(true).format(SLASH_YMD);
-        let date_range2 = moment(params2).utc(true).format(SLASH_YMD);
-        console.log(params.range1);
-        console.log(date_range1);
+        let date_range1 = moment(params1).utc().format(SLASH_YMD);
+        let date_range2 = moment(params2).utc().format(SLASH_YMD);
+        // console.log(params.range1);
+        // console.log(date_range1);
+        // console.log(date_range2);
+
+
+        let next_day_date_range1 = moment(date_range1).add(1, 'day').format('YYYY/MM/DD');
+        let next_day_date_range2 = moment(date_range2).add(1, 'day').format('YYYY/MM/DD');
+        
+        
         
         costs.map((item, index) => {
 
@@ -113,19 +120,22 @@ export default class CostsController {
 
 
             let date_cost = moment(item.$original.date).utc().format(SLASH_YMD);
+            
 
-
+            let  TrueDay_From_Calendar = moment(date_cost).add(1, 'day').format('YYYY/MM/DD');
+            console.log("Test: " + TrueDay_From_Calendar);
+            
 
             // YYYY/MM/DD this format
-            let is_between_cost = moment(date_cost).isBetween(date_range1, date_range2, 'days', '(]')
+            let is_between_cost = moment(TrueDay_From_Calendar).isBetween(next_day_date_range1, next_day_date_range2, 'days', '(]')
 
             // console.log("Test_moment: " + moment('20/10/2022').isBetween('19/10/2022', '25/10/2022'));
 
-            console.log(date_cost, date_range1, date_range2, is_between_cost); 
+            console.log(TrueDay_From_Calendar, next_day_date_range1, next_day_date_range2, is_between_cost); 
 
 
 
-            if (is_between_cost || date_cost === date_range1 || date_cost === date_range2) {
+            if (is_between_cost || TrueDay_From_Calendar === next_day_date_range1 || TrueDay_From_Calendar === next_day_date_range2) {
 
                 cost_of_doctor += item.$original.cost_of_doctor;
                 cost_of_medicine += item.$original.cost_of_medicine;
@@ -173,79 +183,61 @@ export default class CostsController {
 
         let date_range1 = moment(params.range1).utc().format(SLASH_YMD);
         let date_range2 = moment(params.range2).utc().format(SLASH_YMD);
-
+        let next_day_date_range1 = moment(date_range1).add(1, 'day').format('YYYY/MM/DD');
+        let next_day_date_range2 = moment(date_range2).add(1, 'day').format('YYYY/MM/DD');
 
         const patients = await Patient.all()
         const costs = await Cost.all()
-        let tmp = 0;
+        let tmp_cost = 0;
         let count_patient = 0
-        let service = 0
+        let sum_of_service = 0
 
+        costs.map( (item) => {
 
-
-
-
-        // console.log(moment('2010-10-29').isBetween('2010-10-19', '2010-10-25'));
-        // const my_date = '2017/07/03';
-        // console.log('pass input format ::==',moment(my_date,'YYYY/MM/DD').format('DD/MM/YYYY'));
-
-
-
-
-        costs.map((item) => {
-
-            let date_cost = moment(item.date, 'YYYY/MM/DD HH:mm:ss').format(SLASH_YMD)
-
+            let date_cost = moment(item.date, 'YYYY/MM/DD').format(SLASH_YMD)
+            let  TrueDay_From_Calendar = moment(date_cost).add(1, 'day').format('YYYY/MM/DD');
             // YYYY/MM/DD this format
-            let is_between_cost = moment(date_cost).isBetween(date_range1, date_range2, 'days', '(]')
+            let is_between_cost = moment(TrueDay_From_Calendar).isBetween(next_day_date_range1, next_day_date_range2, 'days', '(]')
 
-
-            // console.log("----------------------");
-            // console.log("Date_cost: " + date_cost);
-            // console.log(date_range1, date_range2);
-
-
-            if (is_between_cost || date_cost == date_range1 || date_cost == date_range2) {
-                tmp += item.cost_of_doctor +
+            if (is_between_cost || TrueDay_From_Calendar == next_day_date_range1 || TrueDay_From_Calendar == next_day_date_range2) {
+                tmp_cost += item.cost_of_doctor +
                     item.cost_of_medicine +
                     item.cost_of_occupational_therapist +
                     item.cost_of_practitioner +
                     item.cost_of_psychologist +
-                    item.cost_of_teacher
+                    item.cost_of_teacher;
+
+                sum_of_service++;
+                
             }
-
-
         })
 
-        patients.map((item) => {
+        patients.map(  (item) => {
             let date_patient = moment(item.created_at).format(SLASH_YMD)
             // console.log(item.$original.created_at.DateTime);
+            let  TrueDay_From_Calendar = moment(date_patient).add(1, 'day').format('YYYY/MM/DD');
 
-
-            // console.log(moment(item.$original).format(SLASH_DMY));
-            // console.log(item);
-
-
-            let is_between_patient = moment(date_patient).isBetween(date_range1, date_range2, 'days', '(]')
+            // YYYY/MM/DD this format
+            let is_between_patient = moment(TrueDay_From_Calendar).isBetween(next_day_date_range1, next_day_date_range2, 'days', '(]')
 
             console.log("----------------------");
             // console.log("Date_patients: " + date_patient);
             // console.log(date_range1, date_range2);
 
-            if (is_between_patient || date_patient == date_range1 || date_patient == date_range2) {
+            if (is_between_patient || date_patient == next_day_date_range1 || date_patient == next_day_date_range2) {
                 count_patient++
-                service += item.num_of_treatments
+                
             }
 
 
         })
 
-
+        
 
         return JSON.stringify({
-            "sum_of_year": tmp,
+            "sum_of_year": tmp_cost,
             "count_of_patient": count_patient,
-            "service": service
+            "service": sum_of_service
         })
 
 
@@ -256,6 +248,7 @@ export default class CostsController {
 
         const costs = await Cost.all()
         let tmp = 0;
+        let sum_of_service=0
 
         costs.map((item) => {
             tmp += item.cost_of_doctor +
@@ -264,24 +257,27 @@ export default class CostsController {
                 item.cost_of_practitioner +
                 item.cost_of_psychologist +
                 item.cost_of_teacher
+            sum_of_service++;
+            
             return tmp
         })
 
         const patients = await Patient.all()
 
         let count_patient = 0
-        let service = 0
+        
         patients.map((item) => {
             count_patient++
-            service += item.num_of_treatments
+            // service += item.num_of_treatments
         })
+
 
 
 
         return JSON.stringify({
             "sum_of_year": tmp,
             "count_of_patient": count_patient,
-            "service": service
+            "service": sum_of_service
         })
 
     }

@@ -49,7 +49,8 @@ export default class UsersController {
         })
 
         let all_users = User.all()
-        let tmp_doctor_id=0;
+        //init ID doctor
+        let tmp_doctor_id=1001;
 
         const show_log =  (await all_users).map((item,index) => {
 

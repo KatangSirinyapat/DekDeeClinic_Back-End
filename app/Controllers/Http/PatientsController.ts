@@ -49,7 +49,7 @@ export default class PatientsController {
         })
         
         let all_patients = Patient.all()
-        let tmp_patient_id = 0;
+        let tmp_patient_id = 2001;
 
         (await all_patients).map((item,index) => {
 

@@ -209,6 +209,7 @@ export default class CostsController {
             console.log("Date_patients: " + date_patient);
             // console.log(date_range1, date_range2);
 
+            
             if (is_between_patient || date_patient == next_day_date_range1 || date_patient == next_day_date_range2) {
                 count_patient++
                 console.log("T");
@@ -222,7 +223,7 @@ export default class CostsController {
         costs.map( (item) => {
 
             let date_cost = moment(item.date, 'YYYY/MM/DD').format(SLASH_YMD)
-            let  TrueDay_From_Calendar = moment(date_cost).add(1, 'day').format('YYYY/MM/DD');
+            let  TrueDay_From_Calendar = moment(date_cost).format('YYYY/MM/DD');
             // YYYY/MM/DD this format
             let is_between_cost = moment(TrueDay_From_Calendar).isBetween(next_day_date_range1, next_day_date_range2, 'days', '(]')
 

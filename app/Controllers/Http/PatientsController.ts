@@ -47,7 +47,25 @@ export default class PatientsController {
             // NumOfTreatments: schema.string({ trim: true }),
 
         })
+        
+        let all_patients = Patient.all()
+        let tmp_patient_id = 0;
+
+        (await all_patients).map((item,index) => {
+
+            if(index == 0)
+            {
+                
+                tmp_patient_id  = item.clinic_number+1
+            }
+
+        })
+
         const payload = await request.validate({ schema: newPatientSchema })
+
+        //Init Patient clinic_number
+
+        payload.clinic_number = tmp_patient_id
         const patient = await Patient.create(payload)
 
         response.status(201)
@@ -116,8 +134,8 @@ export default class PatientsController {
         })
 
 
-        patient1.num_of_treatments = count
-        patient1.save()
+        // patient1.num_of_treatments = count
+        // patient1.save()
 
 
         return patient1

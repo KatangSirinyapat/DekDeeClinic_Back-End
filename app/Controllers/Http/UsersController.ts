@@ -35,7 +35,7 @@ export default class UsersController {
 
     public async store({ request, response }:HttpContext){
 
-        const body = request.body()
+      
         
 
         const newUserSchema = schema.create({
@@ -48,12 +48,27 @@ export default class UsersController {
             position: schema.string({ trim: true}),
         })
 
+        let all_users = User.all()
+        let tmp_doctor_id=0;
+
+        const show_log =  (await all_users).map((item,index) => {
+
+            // Use last index from User
+            if(index == 0)
+            {
+                console.log(index);
+                tmp_doctor_id = item.doctor_id+1
+            }
+        })
+
+        console.log(tmp_doctor_id);
+        
+    
         const payload = await request.validate({ schema: newUserSchema })
 
-        // payload.doctor_id = body.doctor_id+1
+        //Init doctor_id
+        payload.doctor_id = tmp_doctor_id
 
-
-        
 
         const user = await User.create(payload)
 
@@ -93,13 +108,19 @@ export default class UsersController {
 
     }
 
-    public async update({ params, request }){
+    public async update({ params, request, response }){
         
         
 
         const body = request.body()
         let user = await User.findOrFail(params.doctor_id)
         // user.doctor_id = body.doctor_id
+
+       
+       
+        
+        
+
         user.fname = body.fname
         user.lname = body.lname
         user.email = body.email

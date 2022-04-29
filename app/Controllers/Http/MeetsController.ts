@@ -33,14 +33,31 @@ export default class MeetsController {
             patient_id: schema.number(),
 
         })
+
         const payload = await request.validate({ schema: newMeetSchema })
+
+        let all_meet = Meet.all()
+
+        ;(await all_meet).map((item) => {
+
+            if(item.date_meet == payload.date_meet )
+            {
+               
+                if(item.time == payload.time || item.time_to == payload.time_to)
+                {
+                    console.log("Duplicate Date");
+                    response.status(403)
+                    response.send("Duplicate Date time")
+                }
+            }
+        })
+
+        console.log("Test:"+ payload.date_meet);
+
+
         const meet = await Meet.create(payload)
-
-        
-
         response.status(201)
 
-        
         
         return meet
     }
@@ -57,10 +74,26 @@ export default class MeetsController {
 
     }
 
-    public async update({ params, request }:HttpContext) {
+    public async update({ params, request, response }:HttpContext) {
 
         const body = request.body()
-        const meet = await Meet.findOrFail(params.id)
+        const meet = await Meet.findOrFail(params.id);
+
+        let all_meet = Meet.all()
+
+        ;(await all_meet).map((item) => {
+
+            if(item.date_meet == body.date_meet )
+            {
+               
+                if(item.time == body.time || item.time_to == body.time_to)
+                {
+                    console.log("Duplicate Date");
+                    response.status(403)
+                    response.send("Duplicate Date time")
+                }
+            }
+        })
         
         meet.details = body.details
         meet.topic = body.topic

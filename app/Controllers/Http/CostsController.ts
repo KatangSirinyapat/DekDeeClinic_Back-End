@@ -192,6 +192,33 @@ export default class CostsController {
         let count_patient = 0
         let sum_of_service = 0
 
+        patients.map((item) => {
+            let date_patient = moment(item.created_at.toSQLDate()).format(SLASH_YMD)
+            
+          
+            console.log(item.created_at.toSQLDate());
+            
+            
+            
+            let  TrueDay_From_Calendar = moment(date_patient).add(1, 'day').format('YYYY/MM/DD');
+
+            // YYYY/MM/DD this format
+            let is_between_patient = moment(TrueDay_From_Calendar).isBetween(next_day_date_range1, next_day_date_range2, 'days', '(]')
+
+            console.log("----------------------");
+            console.log("Date_patients: " + date_patient);
+            // console.log(date_range1, date_range2);
+
+            if (is_between_patient || date_patient == next_day_date_range1 || date_patient == next_day_date_range2) {
+                count_patient++
+                console.log("T");
+                
+                
+            }
+
+
+        })
+
         costs.map( (item) => {
 
             let date_cost = moment(item.date, 'YYYY/MM/DD').format(SLASH_YMD)
@@ -200,6 +227,9 @@ export default class CostsController {
             let is_between_cost = moment(TrueDay_From_Calendar).isBetween(next_day_date_range1, next_day_date_range2, 'days', '(]')
 
             if (is_between_cost || TrueDay_From_Calendar == next_day_date_range1 || TrueDay_From_Calendar == next_day_date_range2) {
+              
+                sum_of_service++;
+              
                 tmp_cost += item.cost_of_doctor +
                     item.cost_of_medicine +
                     item.cost_of_occupational_therapist +
@@ -207,30 +237,11 @@ export default class CostsController {
                     item.cost_of_psychologist +
                     item.cost_of_teacher;
 
-                sum_of_service++;
-                
+               
             }
         })
 
-        patients.map(  (item) => {
-            let date_patient = moment(item.created_at).format(SLASH_YMD)
-            // console.log(item.$original.created_at.DateTime);
-            let  TrueDay_From_Calendar = moment(date_patient).add(1, 'day').format('YYYY/MM/DD');
-
-            // YYYY/MM/DD this format
-            let is_between_patient = moment(TrueDay_From_Calendar).isBetween(next_day_date_range1, next_day_date_range2, 'days', '(]')
-
-            console.log("----------------------");
-            // console.log("Date_patients: " + date_patient);
-            // console.log(date_range1, date_range2);
-
-            if (is_between_patient || date_patient == next_day_date_range1 || date_patient == next_day_date_range2) {
-                count_patient++
-                
-            }
-
-
-        })
+        
 
         
 
